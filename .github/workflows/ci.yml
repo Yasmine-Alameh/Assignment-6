@@ -40,3 +40,12 @@ jobs:
 
       - name: Push Docker image
         run: docker push ghcr.io/yasmine-alameh/assignment-6:latest
+        
+  deploy:
+    needs: test
+    runs-on: [self-hosted, portfolio-deploy]
+    steps:
+      - name: Check Docker on Windows
+        if: runner.os == 'Windows'
+        shell: powershell -NoProfile -ExecutionPolicy Bypass -File {0}
+        run: docker info
